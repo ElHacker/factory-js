@@ -24,13 +24,13 @@ var Factory =  (function() {
     constructors[type] = constrFn;
   },
 
-  // Build a object using a constructor type
+  // Builds a object using a constructor type
   build = function(type) {
 
     // error if the constructor does not exist
     if (typeof constructors[type] !== "function") {
       throw {
-        name: "NonExistentError",
+        name: "NotSuchConstructorError",
         message: type + " doesn't exist"
       };
     }
