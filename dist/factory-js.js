@@ -12,20 +12,27 @@ var Factory =  (function() {
     // per instace of the constructor and assign that number
     // to a property of the instace
     constrFn.propertiesToSequence = [];
-    constrFn.sequence = function(property) {
-      this.propertiesToSequence.push(property);
+    constrFn.sequence = function(property, fn) {
+      this.propertiesToSequence.push({
+        "property": property,
+        "fn": fn
+      });
       return this;
     };
 
     // AutoIncrement increments a counter per instance
     constrFn.prototype.autoIncrement = (function() {
       var count = 0;
-      return function(property) {
-        if(typeof this.autoIncremented === 'undefined' || this.autoIncremented !== true) {
+      return function(property, fn) {
+        if(typeof this.autoIncremented === "undefined" || this.autoIncremented !== true) {
           count += 1;
           this.autoIncremented = true;
         }
-        this[property]=count;
+        if(typeof fn === "function") {
+          this[property] = fn(count);
+        } else {
+          this[property] = count;
+        }
       };
     }());
     return constrFn;
@@ -56,6 +63,7 @@ var Factory =  (function() {
   // Builds a object using a constructor type
   build = function(type) {
     var objectBuilt = {},
+        autoIncrementObj = {},
         i;
     // error if the constructor does not exist
     if (typeof constructors[type] !== "function") {
@@ -69,7 +77,8 @@ var Factory =  (function() {
      objectBuilt = new constructors[type]();
      // Call its autoincrement method per property needed
      for(i = 0; i < constructors[type].propertiesToSequence.length; i += 1) {
-       objectBuilt.autoIncrement(constructors[type].propertiesToSequence[i]);
+       autoIncrementObj = constructors[type].propertiesToSequence[i];
+       objectBuilt.autoIncrement(autoIncrementObj.property, autoIncrementObj.fn);
      }
      return objectBuilt;
   },
