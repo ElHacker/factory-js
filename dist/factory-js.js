@@ -1,4 +1,6 @@
-var Factory =  (function() {
+var Factory = {};
+
+(function() {
   // Private properties
   var constructors = {},
 
@@ -17,6 +19,14 @@ var Factory =  (function() {
         "property": property,
         "fn": fn
       });
+      return this;
+    };
+
+    // Sets a defaultProperties attributes that help
+    // to initialize new objects with the specified properties
+    // set to a default value
+    constrFn.defaults = function(properties) {
+      this.defaultProperties = properties;
       return this;
     };
 
@@ -62,11 +72,13 @@ var Factory =  (function() {
 
   // Builds a object using a constructor type
   build = function(type) {
-    var objectBuilt = {},
+    var constructor = constructors[type],
+        objectBuilt = {},
         autoIncrementObj = {},
-        i;
+        property = {},
+        i = 0;
     // error if the constructor does not exist
-    if (typeof constructors[type] !== "function") {
+    if (typeof constructor !== "function") {
       throw {
         name: "NotSuchConstructorError",
         message: type + " doesn't exist"
@@ -74,13 +86,17 @@ var Factory =  (function() {
     }
 
     // Build the object
-     objectBuilt = new constructors[type]();
-     // Call its autoincrement method per property needed
-     for(i = 0; i < constructors[type].propertiesToSequence.length; i += 1) {
-       autoIncrementObj = constructors[type].propertiesToSequence[i];
-       objectBuilt.autoIncrement(autoIncrementObj.property, autoIncrementObj.fn);
-     }
-     return objectBuilt;
+    objectBuilt = new constructor();
+    // Set the default properties to the new object
+    for(property in constructor.defaultProperties) {
+      objectBuilt[property] = constructor.defaultProperties[property];
+    }
+    // Call its autoincrement method per property needed
+    for(i = 0; i < constructor.propertiesToSequence.length; i += 1) {
+      autoIncrementObj = constructor.propertiesToSequence[i];
+      objectBuilt.autoIncrement(autoIncrementObj.property, autoIncrementObj.fn);
+    }
+    return objectBuilt;
   },
 
   // Build a list of objects using a constructor type
@@ -97,7 +113,7 @@ var Factory =  (function() {
   // end var
 
   // Revealing public API;
-  return {
+  Factory = {
     define: define,
     build: build,
     buildList: buildList

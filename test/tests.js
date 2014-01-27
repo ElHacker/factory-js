@@ -1,5 +1,7 @@
-test("Factory.define(type, constrFn)", function() {
-  expect(2);
+test("Factory.define(type, constrFn).defaults(obj)", function() {
+  var turtle = {};
+
+  expect(3);
 
   // Check for the right errors to happen
   throws(
@@ -19,6 +21,13 @@ test("Factory.define(type, constrFn)", function() {
     "raises error, type was already defined"
   );
 
+  // Check for defaults chained function
+  Factory.define("turtle", function() {}).defaults({
+                     name: "Donatelo"
+                 });
+  turtle = Factory.build("turtle");
+
+  equal(turtle.name, "Donatelo", "defaults() adds default properties");
 });
 
 test("Factory.build(type)", function() {
