@@ -49,9 +49,11 @@ var Factory = {};
   },
 
   // Defines a constructor type
+  // params:
+  // @constrFn (optional)
   define = function(type, constrFn) {
 
-    if (typeof constrFn !== "function") {
+    if (typeof constrFn !== "undefined" && typeof constrFn !== "function") {
       throw {
         name: "NotAFunctionError",
         message: "constrFn is not a function; it is a: " + typeof constrFn
@@ -63,6 +65,9 @@ var Factory = {};
         name: "AlreadyDefinedType",
         message: "that object type was already defined"
       };
+    }
+    if( typeof constrFn === "undefined" ) {
+      constrFn = function() {};
     }
     augmentConstructor(constrFn);
     constructors[type] = constrFn;

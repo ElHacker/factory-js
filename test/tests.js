@@ -1,7 +1,8 @@
 test("Factory.define(type, constrFn).defaults(obj)", function() {
-  var turtle = {};
+  var turtle = {},
+      bird = {};
 
-  expect(3);
+  expect(4);
 
   // Check for the right errors to happen
   throws(
@@ -28,6 +29,15 @@ test("Factory.define(type, constrFn).defaults(obj)", function() {
   turtle = Factory.build("turtle");
 
   equal(turtle.name, "Donatelo", "defaults() adds default properties");
+
+  // constrFn parameter is optional
+  Factory.define("bird").defaults({
+    canFly: true
+  });
+
+  bird = Factory.build("bird");
+
+  ok(bird.canFly, "the constrFn param is optional");
 });
 
 test("Factory.build(type)", function() {
