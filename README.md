@@ -34,6 +34,6 @@ var foo = Factory.build("foo");
 var notes;
 Factory.define("note", NoteConstructor).defaults({id:0, title: "Note #0"})
 .sequence("id")
-.sequence(function(i) { return "Note #" + i });
+.sequence("title", function(i) { return "Note #" + i });
 notes = Factory.buildList("note", 10);
 ```
