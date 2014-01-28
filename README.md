@@ -3,6 +3,10 @@ factory-js
 
 Factory for building Javascript objects.
 
+Include to your project
+=========
+<script src="https://raw2.github.com/HackerOfDreams/factory-js/master/dist/factory.min.js"></script>
+
 Usage
 =========
 
