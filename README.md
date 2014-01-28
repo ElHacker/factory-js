@@ -5,7 +5,9 @@ Factory for building Javascript objects.
 
 Include to your project
 =========
+```html
 <script src="https://raw2.github.com/HackerOfDreams/factory-js/master/dist/factory.min.js"></script>
+```
 
 Usage
 =========
