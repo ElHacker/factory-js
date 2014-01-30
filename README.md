@@ -13,8 +13,11 @@ Usage
 =========
 
 ```javascript
-var note;
-Factory.define("note", NoteConstructor).defaults({title:"A good note"});
+var note,
+  Note = function Note() {
+    this.title = "";
+  };
+Factory.define("note", Note).defaults({title:"A good note"});
 note = Factory.build("note");
 ```
 
