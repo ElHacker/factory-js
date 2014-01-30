@@ -82,12 +82,10 @@ var Factory = {};
         autoIncrementObj = {},
         property = {},
         i = 0;
+
     // error if the constructor does not exist
     if (typeof constructor !== "function") {
-      throw {
-        name: "NotSuchConstructorError",
-        message: type + " doesn't exist"
-      };
+      return undefined;
     }
 
     // Build the object

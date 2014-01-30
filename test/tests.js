@@ -50,13 +50,8 @@ test("Factory.clean()", function() {
   notStrictEqual(typeof foo, "undefined", "Factory build the defined object");
   // call clean method
   Factory.clean();
-  throws(
-    function() {
-      var foo = Factory.build("foo");
-    },
-    /doesn't exist/,
-    "Factory was cleaned"
-  );
+  foo = Factory.build("foo");
+  strictEqual(typeof foo, "undefined", "Factory is clean");
 });
 
 test("Factory.build(type)", function() {
@@ -66,21 +61,18 @@ test("Factory.build(type)", function() {
   var SimpleObjectConstructor = function() {
     this.name = "simple";
   },
-  aSimpleObject = {};
+  aSimpleObject = {},
+  nonExistent = {};
 
   Factory.define("simple", SimpleObjectConstructor);
   aSimpleObject = Factory.build("simple");
 
   ok(aSimpleObject, "it builds a object");
 
-  // Check for right errors
-  throws(
-    function() {
-      Factory.build("nonexistent");
-    },
-    /doesn't exist/,
-    "raises error, constructor type doesn't exists"
-  );
+  // Returns undefined when nonexistent
+  nonExistent = Factory.build("nonexistent");
+  strictEqual(typeof nonExistent, "undefined", "Returns undefined when nonexistent constructor is called");
+
   Factory.clean();
 });
 
