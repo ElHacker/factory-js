@@ -32,8 +32,17 @@ Factory.define("type").defaults(defaultObjProperties);
 ## Build a defined Object
 
 ```javascript
-var foo = Factory.build("foo");
+var foo;
+Factory.define("foo").defaults({name:"bar"});
+foo = Factory.build("foo");
 ```
+You can override properties of defined objects
+```javascript
+var foo;
+Factory.define("foo").defaults({name:"bar"});
+foo = Factory.build("foo", {name: "I'm foo"});
+```
+Note: If the property doesn't exist, it will be created
 
 ## Build Lists
 ```javascript
@@ -42,4 +51,11 @@ Factory.define("note", NoteConstructor).defaults({id:0, title: "Note #0"})
 .sequence("id")
 .sequence("title", function(i) { return "Note #" + i });
 notes = Factory.buildList("note", 10);
+```
+
+## Clean
+Cleans the Factory's defined constructors
+
+```javascript
+Factory.clean();
 ```
