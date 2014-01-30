@@ -76,7 +76,7 @@ var Factory = {};
   },
 
   // Builds a object using a constructor type
-  build = function(type) {
+  build = function(type, overridenProps) {
     var constructor = constructors[type],
         objectBuilt = {},
         autoIncrementObj = {},
@@ -95,6 +95,14 @@ var Factory = {};
     // Set the default properties to the new object
     for(property in constructor.defaultProperties) {
       objectBuilt[property] = constructor.defaultProperties[property];
+    }
+
+    // Set the overriden properties' values to the new object
+    // if the property is not existent it will be added
+    if (typeof overridenProps !== "undefined") {
+      for(property in overridenProps) {
+        objectBuilt[property] = overridenProps[property];
+      }
     }
     // Call its autoincrement method per property needed
     for(i = 0; i < constructor.propertiesToSequence.length; i += 1) {

@@ -84,6 +84,16 @@ test("Factory.build(type)", function() {
   Factory.clean();
 });
 
+test("Factory.build(type, overrides)", function() {
+  expect(1);
+  var foo;
+  Factory.define("foo").defaults({
+    name: "bar"
+  });
+  foo = Factory.build("foo", {name: "I'm foo"});
+  equal(foo.name, "I'm foo", "Build allows to override default properties' values");
+});
+
 test("Factory.buildList(type, quantity)", function() {
 
   // Check for building a list of objects
