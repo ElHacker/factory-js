@@ -114,6 +114,11 @@ var Factory = {};
     }
 
     return objectList;
+  },
+
+  // Clean the constructors object
+  clean = function() {
+    constructors = {};
   };
   // end var
 
@@ -121,7 +126,8 @@ var Factory = {};
   Factory = {
     define: define,
     build: build,
-    buildList: buildList
+    buildList: buildList,
+    clean: clean
   };
 
 }());
