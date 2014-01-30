@@ -1,7 +1,7 @@
 factory-js
 ==========
 
-Factory for building Javascript objects.
+Factory for building Javascript objects. Good for test fixtures.
 
 Include it to your project
 =========
@@ -18,7 +18,7 @@ Factory.define("note", NoteConstructor).defaults({title:"A good note"});
 note = Factory.build("note");
 ```
 
-##Define a Object
+##Define an Object
 
 ```javascript
 Factory.define("type", ConstructorFunction).defaults(defaultObjProperties);
