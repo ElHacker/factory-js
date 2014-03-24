@@ -6,13 +6,17 @@ var Factory = {};
 
   // Private methods
 
-  // Augments a constructor provided by the client
-  // adds properties and functions used to handle sequences
+  /**
+    * Augments a constructor provided by the client
+    * adds properties and functions used to handle sequences
+    */
   augmentConstructor = function(constrFn) {
 
-    // Helper function to give a unique number
-    // per instace of the constructor and assign that number
-    // to a property of the instace
+    /**
+      * Helper function to give a unique number
+      * per instace of the constructor and assign that number
+      * to a property of the instace
+      */
     constrFn.propertiesToSequence = [];
     constrFn.sequence = function(property, fn) {
       this.propertiesToSequence.push({
@@ -22,9 +26,11 @@ var Factory = {};
       return this;
     };
 
-    // Sets a defaultProperties attributes that help
-    // to initialize new objects with the specified properties
-    // set to a default value
+    /**
+      * Sets a defaultProperties attributes that help
+      * to initialize new objects with the specified properties
+      * set to a default value
+      */
     constrFn.defaults = function(properties) {
       this.defaultProperties = properties;
       return this;
@@ -48,9 +54,11 @@ var Factory = {};
     return constrFn;
   },
 
-  // Defines a constructor type
-  // params:
-  // @constrFn (optional)
+  /**
+    * Defines a constructor type
+    * params:
+    * @constrFn (optional)
+    */
   define = function(type, constrFn) {
 
     if (typeof constrFn !== "undefined" && typeof constrFn !== "function") {
@@ -90,18 +98,22 @@ var Factory = {};
 
     // Build the object
     objectBuilt = new constructor();
+
     // Set the default properties to the new object
     for(property in constructor.defaultProperties) {
       objectBuilt[property] = constructor.defaultProperties[property];
     }
 
-    // Set the overriden properties' values to the new object
-    // if the property is not existent it will be added
+    /**
+      * Set the overriden properties' values to the new object
+      * if the property is not existent it will be added
+      */
     if (typeof overridenProps !== "undefined") {
       for(property in overridenProps) {
         objectBuilt[property] = overridenProps[property];
       }
     }
+
     // Call its autoincrement method per property needed
     for(i = 0; i < constructor.propertiesToSequence.length; i += 1) {
       autoIncrementObj = constructor.propertiesToSequence[i];
@@ -126,6 +138,7 @@ var Factory = {};
   clean = function() {
     constructors = {};
   };
+
   // end var
 
   // Revealing public API;
